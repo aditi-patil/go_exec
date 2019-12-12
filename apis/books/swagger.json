@@ -1,0 +1,204 @@
+{
+  "produces": [
+    "application/json"
+  ],
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "swagger": "2.0",
+  "info": {
+    "description": "The purpose of this application is to create basic CRUD operation with mongo database, mux and go-swagger.",
+    "title": "Testing go-swagger"
+  },
+  "host": "localhost:3000",
+  "paths": {
+    "/book": {
+      "post": {
+        "description": "Create new book record into coolection db",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "operationId": "CreateBookHandler",
+        "parameters": [
+          {
+            "name": "book",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "author": {
+                  "type": "string"
+                },
+                "title": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "book response",
+            "schema": {
+              "$ref": "#/definitions/Book"
+            }
+          }
+        }
+      }
+    },
+    "/book/{bookId}": {
+      "get": {
+        "description": "Returns book with specific id from the collection db",
+        "produces": [
+          "application/json"
+        ],
+        "operationId": "GetBookHandler",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "ID of book to return",
+            "name": "bookId",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "book response",
+            "schema": {
+              "$ref": "#/definitions/Book"
+            }
+          }
+        }
+      },
+      "put": {
+        "description": "Update book parameters with specific id from the collection db",
+        "produces": [
+          "application/json"
+        ],
+        "operationId": "UpdateBookHandler",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "ID of book to return",
+            "name": "bookId",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "book",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "author": {
+                  "type": "string"
+                },
+                "price": {
+                  "type": "float"
+                },
+                "publisher": {
+                  "type": "string"
+                },
+                "title": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "book updated"
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes book with specific id from the collection db",
+        "produces": [
+          "application/json"
+        ],
+        "operationId": "DeleteBookHandler",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "ID of book to return",
+            "name": "bookId",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "book response"
+          }
+        }
+      }
+    },
+    "/books": {
+      "get": {
+        "description": "Returns all books from the collection db",
+        "produces": [
+          "application/json"
+        ],
+        "operationId": "GetAllBooksHandler",
+        "responses": {
+          "200": {
+            "description": "book response",
+            "schema": {
+              "type": "array",
+              "$ref": "#/definitions/Book"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Book": {
+      "type": "object",
+      "properties": {
+        "_id": {
+          "$ref": "#/definitions/ObjectID"
+        },
+        "author": {
+          "description": "author of this book",
+          "type": "string",
+          "x-go-name": "Author"
+        },
+        "price": {
+          "description": "price of this book",
+          "type": "number",
+          "format": "float",
+          "x-go-name": "Price"
+        },
+        "publisher": {
+          "description": "publisher of this book",
+          "type": "string",
+          "x-go-name": "Publisher"
+        },
+        "title": {
+          "description": "title of this book",
+          "type": "string",
+          "x-go-name": "Title"
+        }
+      },
+      "x-go-package": "apis/books"
+    },
+    "ObjectID": {
+      "type": "array",
+      "title": "ObjectID is the BSON ObjectID type.",
+      "items": {
+        "type": "integer",
+        "format": "uint8"
+      },
+      "x-go-package": "go.mongodb.org/mongo-driver/bson/primitive"
+    }
+  }
+}
