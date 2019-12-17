@@ -1,0 +1,213 @@
+{
+  "produces": [
+    "application/json"
+  ],
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "swagger": "2.0",
+  "info": {
+    "description": "The purpose of this application is to create basic CRUD operation with mongo database, mux and go-swagger.",
+    "title": "Testing go-swagger"
+  },
+  "host": "localhost:3000",
+  "paths": {
+    "/employee/{id}": {
+      "get": {
+        "description": "Returns Employee with specific id from the collection db",
+        "produces": [
+          "application/json"
+        ],
+        "operationId": "GetEmployee",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "ID of employee to return",
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Employee response",
+            "schema": {
+              "$ref": "#/definitions/Employee"
+            }
+          }
+        }
+      },
+      "put": {
+        "description": "Update book parameters with specific id from the collection db",
+        "produces": [
+          "application/json"
+        ],
+        "operationId": "UpdateEmployee",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "ID of employee to return",
+            "name": "id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "employee",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "designation": {
+                  "type": "string"
+                },
+                "mobile": {
+                  "type": "int"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "practice": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "employee updated"
+          }
+        }
+      },
+      "delete": {
+        "description": "Deletes employee with specific id from the collection db",
+        "produces": [
+          "application/json"
+        ],
+        "operationId": "DeleteEmployee",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "ID of employee to return",
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "employee response"
+          }
+        }
+      }
+    },
+    "/employees": {
+      "get": {
+        "description": "Returns all employees from the collection db",
+        "produces": [
+          "application/json"
+        ],
+        "operationId": "ListAllEmployees",
+        "responses": {
+          "200": {
+            "description": "employee response",
+            "schema": {
+              "type": "array",
+              "$ref": "#/definitions/Employee"
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "Create new employee record into coolection db",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "operationId": "CreateEmployee",
+        "parameters": [
+          {
+            "name": "employee",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "designation": {
+                  "type": "string"
+                },
+                "empid": {
+                  "type": "string"
+                },
+                "mobile": {
+                  "type": "int"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "practice": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "employee response",
+            "schema": {
+              "$ref": "#/definitions/Employee"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Employee": {
+      "type": "object",
+      "properties": {
+        "_id": {
+          "$ref": "#/definitions/ObjectId"
+        },
+        "designation": {
+          "description": "destignation of this employee",
+          "type": "string",
+          "x-go-name": "Designation"
+        },
+        "empid": {
+          "description": "empid of this employee",
+          "type": "string",
+          "x-go-name": "EmpID"
+        },
+        "mobile": {
+          "description": "mobile of this employee",
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "Mobile"
+        },
+        "name": {
+          "description": "name of this employee",
+          "type": "string",
+          "x-go-name": "Name"
+        },
+        "practice": {
+          "description": "practice of this employee",
+          "type": "string",
+          "x-go-name": "Practice"
+        }
+      },
+      "x-go-package": "rest_apis/employee/api"
+    },
+    "ObjectId": {
+      "description": "http://www.mongodb.org/display/DOCS/Object+IDs",
+      "type": "string",
+      "title": "ObjectId is a unique ID identifying a BSON value. It must be exactly 12 bytes\nlong. MongoDB objects by default have such a property set in their \"_id\"\nproperty.",
+      "x-go-package": "gopkg.in/mgo.v2/bson"
+    }
+  }
+}
